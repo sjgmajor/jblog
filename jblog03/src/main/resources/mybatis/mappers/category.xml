@@ -2,5 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="category">
+	<insert id="insert" parameterType = "categoryvo">
+		<![CDATA[
+			insert
+			  into category
+			 value ( null, #{name}, #{description }, #{blogId })
+		]]>
+	</insert>
 	
+	<select id="findById" parameterType = "string" resultType = "categoryvo">
+		<![CDATA[
+			select no, name, description, blog_id as blogId
+			  from category
+			 where blog_id = #{blogId }
+		]]>
+	</select>
+
+	<select id="findByName" parameterType = "categoryVo" resultType = "long">
+		<![CDATA[
+			select no
+			  from category
+			 where blog_id = #{blogId }
+			   and name = #{name}
+		]]>
+	</select>
+	
+	<delete id="delete" parameterType = "categoryvo">
+		<![CDATA[
+			delete
+			  from category
+			 where no = #{no}
+			   and blog_id = #{blogId}
+		]]>
+	</delete>
 </mapper>
