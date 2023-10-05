@@ -18,11 +18,21 @@ public class CategoryService {
 		return categoryRepository.findById(blogId);
 	}
 
-	public void insertCategory(CategoryVo categoryVo) {
+	public void insertCategory(String blogId, String name, String description) {
+		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setBlogId(blogId);
+		categoryVo.setName(name);
+		categoryVo.setDescription(description);
 		categoryRepository.insert(categoryVo);
 	}
 
-	public void deleteCategory(CategoryVo categoryVo) {
-		categoryRepository.delete(categoryVo);
+	public void deleteCategory(Long no, String blogId) {
+		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setNo(no);
+		categoryVo.setBlogId(blogId);
+		categoryRepository.deletePosts(categoryVo);
+		categoryRepository.deleteCategory(categoryVo);
 	}
+
+
 }

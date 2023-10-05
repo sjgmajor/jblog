@@ -22,8 +22,12 @@ public class CategoryRepository {
 		return sqlSession.selectList("category.findById", blogId);
 	}
 
-	public void delete(CategoryVo categoryVo) {
-		sqlSession.delete("category.delete", categoryVo);
+	public void deletePosts(CategoryVo categoryVo) {
+		sqlSession.delete("category.deletePosts", categoryVo);
+	}
+
+	public void deleteCategory(CategoryVo categoryVo) {
+		sqlSession.delete("category.deleteCategory", categoryVo);
 	}
 
 	public Long findByName(CategoryVo categoryVo) {

@@ -20,7 +20,11 @@ public class BlogService {
 		blogRepository.insert(blogId);
 	}
 
-	public void UpdateBlog(BlogVo blogVo) {
+	public void UpdateBlog(String url, String title, String blogId) {
+		BlogVo blogVo = new BlogVo();
+		blogVo.setImage(url);
+		blogVo.setTitle(title);
+		blogVo.setBlogId(blogId);
 		blogRepository.update(blogVo);
 	}
 

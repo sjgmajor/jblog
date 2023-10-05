@@ -27,12 +27,12 @@
 		      			<th>설명</th>
 		      			<th>삭제</th>      			
 		      		</tr>
-					<c:set var="count" value="${fn:length(list) }" />
+					
 					<c:forEach items="${list }" var="list" varStatus="status">
 						<tr>
 							<td>${status.index + 1}</td>
 							<td>${list.name }</td>
-							<td>10</td>
+							<td>${list.postCount }</td>
 							<td>${list.description }</td>
 							<td>
 								<a href="${pageContext.request.contextPath}/${list.blogId}/admin/category/delete/${list.no}">
