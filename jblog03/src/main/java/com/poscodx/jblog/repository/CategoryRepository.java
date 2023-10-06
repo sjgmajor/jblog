@@ -15,7 +15,11 @@ public class CategoryRepository {
 	private SqlSession sqlSession;
 	
 	public void insert(CategoryVo categoryVo) {
-		sqlSession.insert("category.insert", categoryVo);
+		if(categoryVo.getName() == "" || categoryVo.getDescription() == "") {
+		}
+		else {
+			sqlSession.insert("category.insert", categoryVo);
+		}
 	}
 
 	public List<CategoryVo> findById(String blogId) {

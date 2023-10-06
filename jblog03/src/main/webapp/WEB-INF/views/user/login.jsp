@@ -12,7 +12,6 @@
 </head>
 <body>
 	<div class="center-content">
-		<h1 class="logo">JBlog</h1>
 		<c:import url="/WEB-INF/views/includes/menu.jsp" />
 		<form class="login-form" name="loginform" method="post" action="${pageContext.request.contextPath }/user/auth">
       		<label class="block-label" >아이디</label> <input type="text" name="id" value="${id }">

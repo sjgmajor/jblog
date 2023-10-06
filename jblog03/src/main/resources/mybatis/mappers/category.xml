@@ -7,7 +7,7 @@
 			insert
 			  into category
 			 value ( null, #{name}, #{description }, #{blogId })
-		]]>
+		]]>		
 	</insert>
 	
 	<select id="findById" parameterType = "string" resultType = "categoryvo">

@@ -3,8 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div id="header">
+	<h2>
+		<a href="${pageContext.request.contextPath}">Jblog</a>
+	</h2>
 	<h1>
-		<a href="${pageContext.request.contextPath}/${authUser.id}">${blogVo.title }</a>
+		<a href="${pageContext.request.contextPath}/${blogVo.blogId}">${blogVo.title }</a>
 	</h1>
 	<ul class="header">
 		<c:choose>

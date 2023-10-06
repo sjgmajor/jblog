@@ -16,7 +16,11 @@ public class PostRepository {
 	private SqlSession sqlSession;
 
 	public void insert(PostVo postVo) {
-		sqlSession.insert("post.insert", postVo);
+		if(postVo.getTitle() == "" || postVo.getContents() == "") {
+		}
+		else {
+			sqlSession.insert("post.insert", postVo);
+		}
 	}
 
 	public List<PostVo> findAllPost(CategoryVo categoryVo) {

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,14 +43,8 @@ public class BlogController {
 			@PathVariable("categoryNo") Optional <Long> categoryNo, 
 			@PathVariable("postNo") Optional <Long> postNo,
 			Model model) {
-		BlogVo blogVo = blogService.getBlog(blogId);
-		model.addAttribute("blogVo", blogVo);
-		List<CategoryVo> categoryList = categoryService.getCategory(blogId);
-		model.addAttribute("categoryList", categoryList);
-		
 		CategoryVo categoryVo = new CategoryVo();
 		PostVo postVo = new PostVo();
-		
 		if (categoryNo.isPresent()) {
 			Long categoryNo1 = categoryNo.get();
 		    postVo.setCategoryNo(categoryNo1);
@@ -62,16 +55,13 @@ public class BlogController {
 		}
 		categoryVo.setBlogId(blogId);
 		
-		List<PostVo> postList;
-		PostVo post;
+		BlogVo blogVo = blogService.getBlog(blogId);
+		List<CategoryVo> categoryList = categoryService.getCategory(blogId);
+		List<PostVo> postList = postService.getPostList(categoryVo, postVo);
+		PostVo post = postService.getPost(categoryVo, postVo);
 		
-		if(postVo.getCategoryNo() == null && postVo.getNo() == null) {
-		postList = postService.getPostList(categoryVo);
-		post = postService.getPost(categoryVo);
-		} else {
-		postList = postService.getPostList(postVo);
-		post = postService.getPost(postVo);
-		}
+		model.addAttribute("blogVo", blogVo);
+		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("postList", postList);
 		model.addAttribute("post", post);
 		
@@ -128,7 +118,7 @@ public class BlogController {
 		return "blog/admin-write";
 	}
 
-	@RequestMapping(value = "/admin/write", method=RequestMethod.POST)
+	@PostMapping(value = "/admin/write")
 	public String adminWrite(@PathVariable("id")String blogId,
 							 @RequestParam("title") String title,
 							 @RequestParam("content") String content,

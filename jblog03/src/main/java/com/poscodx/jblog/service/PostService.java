@@ -18,25 +18,21 @@ public class PostService {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
-	
-	public void insertPost(PostVo postVo, CategoryVo categoryVo) {
 
-	}
-
-	public List<PostVo> getPostList(CategoryVo categoryVo) {
-		return postRepository.findAllPost(categoryVo);
-	}
-	
-	public List<PostVo> getPostList(PostVo postVo) {
-		return postRepository.findAllPostByPostVo(postVo);
+	public List<PostVo> getPostList(CategoryVo categoryVo, PostVo postVo) {
+		if(postVo.getCategoryNo() == null && postVo.getNo() == null) {
+			return postRepository.findAllPost(categoryVo);
+		} else {
+			return postRepository.findAllPostByPostVo(postVo);
+		}
 	}
 	
-	public PostVo getPost(CategoryVo categoryVo) {
-		return postRepository.findPost(categoryVo);
-	}
-	
-	public PostVo getPost(PostVo postVo) {
-		return postRepository.findPostByPostVo(postVo);
+	public PostVo getPost(CategoryVo categoryVo, PostVo postVo) {
+		if(postVo.getCategoryNo() == null && postVo.getNo() == null) {
+			return postRepository.findPost(categoryVo);
+		} else {
+			return postRepository.findPostByPostVo(postVo);
+		}
 	}
 
 	public void insertPost(String title, String content, String blogId, String categoryName) {
@@ -52,9 +48,4 @@ public class PostService {
 		postVo.setCategoryNo(categoryNo);
 		postRepository.insert(postVo);
 	}
-
-
-
-
-
 }

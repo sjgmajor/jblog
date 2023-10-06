@@ -33,6 +33,4 @@ public class CategoryService {
 		categoryRepository.deletePosts(categoryVo);
 		categoryRepository.deleteCategory(categoryVo);
 	}
-
-
 }

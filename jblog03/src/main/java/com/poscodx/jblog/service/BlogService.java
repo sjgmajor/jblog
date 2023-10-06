@@ -27,5 +27,4 @@ public class BlogService {
 		blogVo.setBlogId(blogId);
 		blogRepository.update(blogVo);
 	}
-
 }
