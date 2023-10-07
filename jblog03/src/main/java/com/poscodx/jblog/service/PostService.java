@@ -19,16 +19,12 @@ public class PostService {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
-	public List<PostVo> getPostList(CategoryVo categoryVo, PostVo postVo) {
-		if(postVo.getCategoryNo() == null && postVo.getNo() == null) {
-			return postRepository.findAllPost(categoryVo);
-		} else {
-			return postRepository.findAllPostByPostVo(postVo);
-		}
+	public List<PostVo> getPostList(CategoryVo categoryVo) {
+		return postRepository.findAllPost(categoryVo);
 	}
 	
 	public PostVo getPost(CategoryVo categoryVo, PostVo postVo) {
-		if(postVo.getCategoryNo() == null && postVo.getNo() == null) {
+		if(postVo.getNo() == null) {
 			return postRepository.findPost(categoryVo);
 		} else {
 			return postRepository.findPostByPostVo(postVo);

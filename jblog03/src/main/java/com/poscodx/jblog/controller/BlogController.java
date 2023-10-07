@@ -43,26 +43,40 @@ public class BlogController {
 			@PathVariable("categoryNo") Optional <Long> categoryNo, 
 			@PathVariable("postNo") Optional <Long> postNo,
 			Model model) {
+		
+		BlogVo blogVo = blogService.getBlog(blogId);
+		model.addAttribute("blogVo", blogVo);
+		
+		List<CategoryVo> categoryList = categoryService.getCategory(blogId);
+		model.addAttribute("categoryList", categoryList);
+		
 		CategoryVo categoryVo = new CategoryVo();
 		PostVo postVo = new PostVo();
 		if (categoryNo.isPresent()) {
 			Long categoryNo1 = categoryNo.get();
-		    postVo.setCategoryNo(categoryNo1);
+			categoryVo.setNo(categoryNo1);
+			postVo.setCategoryNo(categoryNo1);
 		}
 		if (postNo.isPresent()) {
 			Long postNo1 = postNo.get();
 			postVo.setNo(postNo1);
 		}
 		categoryVo.setBlogId(blogId);
-		
-		BlogVo blogVo = blogService.getBlog(blogId);
-		List<CategoryVo> categoryList = categoryService.getCategory(blogId);
-		List<PostVo> postList = postService.getPostList(categoryVo, postVo);
-		PostVo post = postService.getPost(categoryVo, postVo);
-		
-		model.addAttribute("blogVo", blogVo);
-		model.addAttribute("categoryList", categoryList);
+
+		List<PostVo> postList = postService.getPostList(categoryVo);
+		if(postList == null || postList.isEmpty()) {
+			CategoryVo defaultCategory = new CategoryVo();
+			defaultCategory.setBlogId(blogId);
+			postList = postService.getPostList(defaultCategory);
+		}
 		model.addAttribute("postList", postList);
+		
+		PostVo post = postService.getPost(categoryVo, postVo);
+		if(post == null) {
+			CategoryVo defaultCategory = new CategoryVo();
+			defaultCategory.setBlogId(blogId);
+			post = postService.getPost(defaultCategory, postVo);
+		}
 		model.addAttribute("post", post);
 		
 		return "blog/main";

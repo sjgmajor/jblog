@@ -27,10 +27,6 @@ public class PostRepository {
 		return sqlSession.selectList("post.findAllPost", categoryVo);
 	}
 
-	public List<PostVo> findAllPostByPostVo(PostVo postVo) {
-		return sqlSession.selectList("post.findAllPostByPostVo", postVo);
-	}
-
 	public PostVo findPost(CategoryVo categoryVo) {
 		return sqlSession.selectOne("post.findPost", categoryVo);
 	}
