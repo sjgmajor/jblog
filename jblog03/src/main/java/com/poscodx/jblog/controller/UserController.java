@@ -3,7 +3,6 @@ package com.poscodx.jblog.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,17 +30,20 @@ public class UserController {
 			@Valid @ModelAttribute("userVo") UserVo userVo,
 			BindingResult result,
 			Model model) {		
-		
+		if(result.hasErrors()) {
+			model.addAllAttributes(result.getModel());
+			return "user/join";
+		}
 		try {
-			if(result.hasErrors()) {
-				model.addAllAttributes(result.getModel());
-				return "user/join";
-			}
+			UserVo existingUser = userService.getUser(userVo);
+		    if (existingUser != null) {
+		        model.addAttribute("Duplicate", "사용 중인 아이디입니다.");
+		        return "user/join";
+		    }
 			userService.join(userVo);
 			return "user/joinsuccess";
-			
-		} catch (DuplicateKeyException e){
-			model.addAttribute("Duplicate", "사용할 수 없는 아이디입니다.");
+		} catch (Exception e){
+			model.addAttribute("errorMessage", "회원 가입 과정에서 오류가 발생했습니다.");
 			return "user/join";
 		}
 	}
