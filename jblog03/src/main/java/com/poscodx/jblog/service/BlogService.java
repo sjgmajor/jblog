@@ -1,5 +1,7 @@
 package com.poscodx.jblog.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,10 @@ public class BlogService {
 	
 	@Autowired
 	private BlogRepository blogRepository;
+	
+	public List<BlogVo> getBlogList() {
+		return blogRepository.findAll();
+	}
 	
 	public BlogVo getBlog(String blogId) {
 		return blogRepository.findById(blogId);

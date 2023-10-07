@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.poscodx.jblog.service.UserService;
 import com.poscodx.jblog.vo.UserVo;
@@ -22,13 +22,16 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/join")
-	public String join(Model model) {
-		model.addAttribute("userVo", new UserVo());
+	public String join(@ModelAttribute UserVo userVo) {
 		return "user/join";
 	}
 	
-	@RequestMapping(value = "/join", method=RequestMethod.POST)
-	public String join(@Valid @ModelAttribute("userVo") UserVo userVo, BindingResult result, Model model) {		
+	@PostMapping(value = "/join")
+	public String join(
+			@Valid @ModelAttribute("userVo") UserVo userVo,
+			BindingResult result,
+			Model model) {		
+		
 		try {
 			if(result.hasErrors()) {
 				model.addAllAttributes(result.getModel());
@@ -38,6 +41,7 @@ public class UserController {
 			return "user/joinsuccess";
 			
 		} catch (DuplicateKeyException e){
+			model.addAttribute("Duplicate", "사용할 수 없는 아이디입니다.");
 			return "user/join";
 		}
 	}
