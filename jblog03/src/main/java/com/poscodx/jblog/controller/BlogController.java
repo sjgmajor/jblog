@@ -43,13 +43,7 @@ public class BlogController {
 			@PathVariable("categoryNo") Optional <Long> categoryNo, 
 			@PathVariable("postNo") Optional <Long> postNo,
 			Model model) {
-		
-		BlogVo blogVo = blogService.getBlog(blogId);
-		model.addAttribute("blogVo", blogVo);
-		
-		List<CategoryVo> categoryList = categoryService.getCategory(blogId);
-		model.addAttribute("categoryList", categoryList);
-		
+		// link 정보
 		CategoryVo categoryVo = new CategoryVo();
 		PostVo postVo = new PostVo();
 		if (categoryNo.isPresent()) {
@@ -62,7 +56,14 @@ public class BlogController {
 			postVo.setNo(postNo1);
 		}
 		categoryVo.setBlogId(blogId);
-
+		
+		// blogVo
+		BlogVo blogVo = blogService.getBlog(blogId);
+		model.addAttribute("blogVo", blogVo);
+		// category 리스트
+		List<CategoryVo> categoryList = categoryService.getCategory(blogId);
+		model.addAttribute("categoryList", categoryList);
+		// post리스트
 		List<PostVo> postList = postService.getPostList(categoryVo);
 		if(postList == null || postList.isEmpty()) {
 			CategoryVo defaultCategory = new CategoryVo();
@@ -70,7 +71,7 @@ public class BlogController {
 			postList = postService.getPostList(defaultCategory);
 		}
 		model.addAttribute("postList", postList);
-		
+		// post정보
 		PostVo post = postService.getPost(categoryVo, postVo);
 		if(post == null) {
 			CategoryVo defaultCategory = new CategoryVo();
