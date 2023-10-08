@@ -23,8 +23,8 @@ public class PostService {
 		return postRepository.findAllPost(categoryVo);
 	}
 	
-	public PostVo getPost(CategoryVo categoryVo, PostVo postVo) {
-		if(postVo.getNo() == null) {
+	public PostVo getPost(CategoryVo categoryVo, PostVo postVo, boolean state) {
+		if(postVo.getNo() == null || state) {
 			return postRepository.findPost(categoryVo);
 		} else {
 			return postRepository.findPostByPostVo(postVo);

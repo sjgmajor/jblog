@@ -37,4 +37,8 @@ public class CategoryRepository {
 	public Long findByName(CategoryVo categoryVo) {
 		return sqlSession.selectOne("category.findByName", categoryVo);
 	}
+
+	public String findBlogId(CategoryVo categoryVo) {
+		return sqlSession.selectOne("category.findBlogId", categoryVo);
+	}
 }

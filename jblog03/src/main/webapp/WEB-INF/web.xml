@@ -52,6 +52,10 @@
 		<error-code>500</error-code>
 		<location>/WEB-INF/views/error/500.jsp</location>
 	</error-page>
+	<error-page>
+		<error-code>400</error-code>
+		<location>/WEB-INF/views/error/400.jsp</location>
+	</error-page>
 	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
