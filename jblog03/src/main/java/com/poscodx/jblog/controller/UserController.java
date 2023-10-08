@@ -27,13 +27,14 @@ public class UserController {
 	
 	@PostMapping(value = "/join")
 	public String join(
-			@Valid @ModelAttribute("userVo") UserVo userVo,
-			BindingResult result,
-			Model model) {		
-		if(result.hasErrors()) {
-			model.addAllAttributes(result.getModel());
-			return "user/join";
-		}
+				@Valid @ModelAttribute("userVo") UserVo userVo,
+				BindingResult result,
+				Model model) {		
+			if(result.hasErrors()) {
+				model.addAllAttributes(result.getModel());
+				return "user/join";
+			}
+			
 		try {
 			UserVo existingUser = userService.getUser(userVo);
 		    if (existingUser != null) {
