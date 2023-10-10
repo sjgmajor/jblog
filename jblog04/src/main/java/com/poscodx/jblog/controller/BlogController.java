@@ -43,25 +43,45 @@ public class BlogController {
 			@PathVariable("categoryNo") Optional <Long> categoryNo, 
 			@PathVariable("postNo") Optional <Long> postNo,
 			Model model) {
+		
+		// link 정보
+		// postNo가 없을 때 : categoryVo 활용
+		// postNo가 있을 때 : postVo 활용
 		CategoryVo categoryVo = new CategoryVo();
 		PostVo postVo = new PostVo();
 		if (categoryNo.isPresent()) {
 			Long categoryNo1 = categoryNo.get();
-		    postVo.setCategoryNo(categoryNo1);
+			categoryVo.setNo(categoryNo1);
+			postVo.setCategoryNo(categoryNo1);
 		}
 		if (postNo.isPresent()) {
 			Long postNo1 = postNo.get();
 			postVo.setNo(postNo1);
 		}
 		categoryVo.setBlogId(blogId);
-		
+		// link의 blogId와 postNo, categoryNo가 일치 여부 확인
+		boolean state = !blogId.equals(categoryService.getId(categoryVo));
+
+		// blogVo
 		BlogVo blogVo = blogService.getBlog(blogId);
-		List<CategoryVo> categoryList = categoryService.getCategory(blogId);
-		List<PostVo> postList = postService.getPostList(categoryVo, postVo);
-		PostVo post = postService.getPost(categoryVo, postVo);
-		
 		model.addAttribute("blogVo", blogVo);
+		// category 리스트
+		List<CategoryVo> categoryList = categoryService.getCategory(blogId);
 		model.addAttribute("categoryList", categoryList);
+		// post리스트
+		List<PostVo> postList = postService.getPostList(categoryVo);
+		// post정보
+		PostVo post = postService.getPost(categoryVo, postVo, state);
+
+		// link의 blogId와 postNo, categoryNo가 일치하지 않을 때
+		// post 기본정보 출력
+		if(state) {
+			CategoryVo defaultCategoryVo = new CategoryVo();
+			defaultCategoryVo.setBlogId(blogId);
+			postList = postService.getPostList(defaultCategoryVo);
+			post = postService.getPost(defaultCategoryVo, postVo, state);
+		}
+
 		model.addAttribute("postList", postList);
 		model.addAttribute("post", post);
 		

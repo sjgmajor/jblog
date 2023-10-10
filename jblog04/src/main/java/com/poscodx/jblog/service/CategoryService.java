@@ -33,4 +33,8 @@ public class CategoryService {
 		categoryRepository.deletePosts(categoryVo);
 		categoryRepository.deleteCategory(categoryVo);
 	}
+
+	public String getId(CategoryVo categoryVo) {
+		return categoryRepository.findBlogId(categoryVo);
+	}
 }

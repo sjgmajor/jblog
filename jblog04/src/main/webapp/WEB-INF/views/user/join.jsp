@@ -37,6 +37,7 @@
 			<img id="img-checkemail" style="display: none;" src="${pageContext.request.contextPath}/assets/images/check.png">
 				<p style="padding:3px 0 5px 0; text-align: left; color: #f00">
 					<form:errors path="id" />
+					${Duplicate}
 				</p>
 			
 			<label class="block-label" for="password">비밀번호</label>
@@ -50,6 +51,9 @@
 				<input id="agree-prov" type="checkbox" name="agreeProv" value="y">
 				<label class="l-float">서비스 약관에 동의합니다.</label>
 			</fieldset>
+			<p style="padding:3px 0 5px 0; text-align: left; color: #f00">
+					${errorMessage}
+				</p>
 			<input type="submit" value="가입하기">
 		</form:form>
 	</div>

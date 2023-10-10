@@ -29,6 +29,14 @@
 			   and name = #{name}
 		]]>
 	</select>
+
+	<select id="findBlogId" parameterType = "categoryVo" resultType = "string">
+		<![CDATA[
+			select blog_id as blogId
+			  from category
+			 where no = #{no }
+		]]>
+	</select>
 	
 	
 	<delete id="deletePosts" parameterType = "categoryvo">
